@@ -242,4 +242,145 @@ def are_arrays_equal(arr1, arr2):
 
     return True  
 
+
 ##question no. 17)Find the Leader Elements: An element is a leader if it is greater than all elements to its right
+def find_leaders(arr):
+    if not arr:
+        return []
+
+    n = len(arr)
+    result = []
+    max_right = arr[n - 1]
+    result.append(max_right)
+
+    for i in range(n - 2, -1, -1):
+        if arr[i] >= max_right:
+            max_right = arr[i]
+            result.append(arr[i])
+
+    result.reverse()
+    return result
+##question no. 18) Move Zeroes to End: Move all zeroes in an array to the end while maintaining the order of non-zero elements.
+def move_zeroes(arr):
+    result = []
+    zero_count = 0
+
+    for x in arr:
+        if x == 0:
+            zero_count += 1
+        else:
+            result.append(x)
+
+    return result + [0] * zero_count
+##question no. 19) Find Subarray with Given Sum.
+def subarray_with_sum(arr, target):
+    curr_sum = 0
+    start = 0
+
+    for end in range(len(arr)):
+        curr_sum += arr[end]
+
+        while curr_sum > target:
+            curr_sum -= arr[start]
+            start += 1
+
+        if curr_sum == target:
+            return arr[start:end+1]
+
+    return []
+
+##question no. 20) Rotate Array to the Left by k Positions
+def rotate_left(arr, k):
+    n = len(arr)
+    if n == 0:
+        return arr
+
+    k = k % n
+
+    def reverse(start, end):
+        while start < end:
+            arr[start], arr[end] = arr[end], arr[start]
+            start += 1
+            end -= 1
+
+    reverse(0, k - 1)
+    reverse(k, n - 1)
+    reverse(0, n - 1)
+
+    return arr
+
+##question no. 21) Find the Kth Smallest Element
+import heapq
+
+def kth_smallest(arr, k):
+    if k > len(arr) or k <= 0:
+        return None
+
+    heap = []
+
+    for num in arr:
+        heapq.heappush(heap, num)
+
+    count = 1
+    while count < k:
+        heapq.heappop(heap)
+        count += 1
+
+    return heapq.heappop(heap)
+
+##question no. 22) Find All Subarrays
+def all_subarrays(arr):
+    result = []
+
+    for i in range(len(arr)):
+        for j in range(i+1, len(arr)+1):
+            result.append(arr[i:j])
+
+    return result
+
+##question no. 23) Maximum Sum Subarray (Kadane's Algorithm)
+def max_subarray_sum(arr):
+    max_sum = arr[0]
+    curr_sum = arr[0]
+
+    for i in range(1, len(arr)):
+        curr_sum = max(arr[i], curr_sum + arr[i])
+        max_sum = max(max_sum, curr_sum)
+
+    return max_sum
+
+##question no. 24) Rearrange Array Alternately: Rearrange an array such that elements alternate between the largest and smallest.
+def rearrange_alternate(arr):
+    arr.sort()
+    result = []
+
+    left = 0
+    right = len(arr) - 1
+
+    while left <= right:
+        if left != right:
+            result.append(arr[right])
+            result.append(arr[left])
+        else:
+            result.append(arr[left])
+
+        left += 1
+        right -= 1
+
+    return result
+
+##question no. 25) Find Majority Element: Find the element that appears more than n/2 times.
+def majority_element(arr):
+    candidate = None
+    count = 0
+
+    for num in arr:
+        if count == 0:
+            candidate = num
+            count = 1
+        elif num == candidate:
+            count += 1
+        else:
+            count -= 1
+
+    return candidate
