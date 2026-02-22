@@ -384,3 +384,38 @@ def majority_element(arr):
             count -= 1
 
     return candidate
+
+
+##question no. 31) Find Equilibrium Index: Find an index such that sum of elements on left = sum on right.
+def equilibriumIndex(arr):
+    total_sum = sum(arr)
+    left_sum = 0
+
+    for i in range(len(arr)):
+        total_sum -= arr[i]
+
+        if left_sum == total_sum:
+            return i
+
+        left_sum += arr[i]
+
+    return -1
+
+##question no. 32)Find Maximum Product Pair: Find two elements whose product is maximum.
+def maxProductPair(arr):
+    arr.sort()
+    n = len(arr)
+
+    return max(arr[0] * arr[1], arr[n-1] * arr[n-2])
+
+##question no. 33)  Find Maximum Difference (j > i)
+## buy at low and sell at high  type question
+def maxDifference(arr):
+    min_element = arr[0]
+    max_diff = 0
+
+    for i in range(1, len(arr)):
+        max_diff = max(max_diff, arr[i] - min_element)
+        min_element = min(min_element, arr[i])
+
+    return max_diff
