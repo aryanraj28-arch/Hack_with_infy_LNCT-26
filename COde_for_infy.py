@@ -62,3 +62,92 @@ class Solution:
     graph = [0] * n
 
 
+""""
+delivery Analytics — Count Revenue Windows
+
+Situation: A delivery company tracks daily revenues from individual orders (positive or negative when refunds occur). For a revenue target K, they want to know how many contiguous periods (subarrays of days) achieved exactly that revenue.
+
+Problem
+Given an integer array revenues[] and integer K, return the total number of contiguous subarrays whose sum equals K
+"""
+
+class Solution:
+    def count_revenue_periods(revenues , K):
+        freq  = {0:1}
+        prefix_sum =0
+        subarr = 0
+
+        for val in revenues:
+            prefix_sum+=val
+            if (prefix_sum -K) in freq:
+                subarr += freq[prefix_sum - K]
+            freq[prefix_sum] = freq.get(prefix_sum, 0) +1
+        return subarr
+    N,K = map(int , input.split())
+    revenues =list(map(int,input().strip().split()))
+    print(count_revenue_periods(revenues , K))
+
+                
+"""
+User Session — Longest Unique Action Sequence
+
+Situation: A product team records user action logs (characters representing actions). They want the longest continuous sequence of actions without repetition to study engagement.
+
+Problem
+Given string S representing user actions, find the length of the longest substring without repeating characters.
+
+Input
+S
+1 ≤ len(S) ≤ 10^5
+Characters are ASCII (or limited alphabet).
+
+Output
+Single integer — the length of longest substring with all distinct characters.
+
+"""
+class Solution:
+    def longest_unique_actions(S):
+        left = 0
+        max_len = 0
+        seen = set()
+        
+        for right in  range(len(S)):
+            while S[right] in seen:
+                seen.remove(S[left])
+                left+=1
+            seen.add(S[right])
+            max_len = max(max_len , right - left + 1)
+        return max_len
+    S= input().strip()
+    print(longest_unique_actions(S))
+
+"""
+Scheduling — Merge Overlapping Time Slots
+
+Situation: A scheduler receives many proposed meeting time slots and needs to merge overlapping slots so rooms can be allocated efficiently.
+
+Problem
+Given N intervals [start, end], merge all overlapping intervals and output the merged list sorted by start time.
+"""
+class Solution:
+    def merge_intervals(intervals):
+        if not intervals:
+            return []
+        intervals.sort(key = lambda x:x[0])
+        merged = [intervals[0]]
+        for s , e in intervals[1:]:
+            last_s , last_e = merged[-1]
+            if s<= last_e:
+                if e> last_e:
+                    merged[-1] = (last_s , e)
+            else:
+                merged.append((s,e))
+        return merged
+    N= int(input().strip())
+    intervals = [tuple(map(int , input().strip().split())) for _ in range(N)]
+    result = merge_intervals(intervals)
+    print(len(result))
+    for s ,e in result:
+        print(s , e)
+
+
