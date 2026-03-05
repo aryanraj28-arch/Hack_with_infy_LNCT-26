@@ -150,4 +150,89 @@ class Solution:
     for s ,e in result:
         print(s , e)
 
+"""
+Ramu has N dishes of different types arranged in a row: A1,A2,…,AN where Ai denotes the type of the ith dish. He wants to choose as many dishes as possible from the given list but while satisfying two conditions:
+
+He can choose only one type of dish.
+No two chosen dishes should be adjacent to each other.
+Ramu wants to know which type of dish he should choose from, so that he can pick the maximum number of dishes.
+
+Example :
+
+Given N= 9 and A= [1,2,2,1,2,1,1,1,1]
+
+For type 1, Ramu can choose at most four dishes. One of the ways to choose four dishes of type 1 is A1,A4, A7 and A9.
+
+For type 2, Ramu can choose at most two dishes. One way is to choose A3 and A5.
+
+So in this case, Ramu should go for type 1, in which he can pick more dishes.
+
+INPUT FORMAT:
+
+The first line contains T, the number of test cases. Then the test cases follow.
+For each test case, the first line contains a single integer N.
+The second line contains N integers A1,A2,…,AN.
+OUTPUT FORMAT
+
+For each test case, print a single line containing one integer ― the type of the dish that Ramu should choose from. If there are multiple answers, print the smallest one.
+
+CONSTRAINTS :
+
+1 <= T <= 10^3
+1 <= N <= 10^3
+1 <= Ai <= 10^3
+"""
+class Solution:
+    def max_dishes(n,item):
+        n = int(input().strip())
+        item = list(map(int,input().strip().split()))
+        max_count = 0
+        item_type = item[0]
+        j=0
+        while j<n:
+            c=1
+            k = j+1
+            while k < n:
+                if item[j] == item[k] and k != j+1: # equal but not adjacent
+                    c +=1
+                    if k < n and item[k] == item[k+1]:
+                        k+=1
+                k+=1
+            if max_count < c:
+                max_count = c
+                item_type = item[j]
+            j+=1
+        print(item_type)
+    t = int(input().strip())
+    for _ in range(t):
+        max_dishes(n , item)
+
+"""
+There are three piles of stones. The first pile contains a stones, the second pile contains b stones and the third pile contains c stones. You must choose one of the piles and split the stones from it to the other two piles; specifically, if the chosen pile initially contained s stones, you should choose an integer k (0≤k≤s), move k stones from the chosen pile onto one of the remaining two piles and s−k stones onto the other remaining pile. Determine if it is possible for the two remaining piles (in any order) to contain x stones and y stones respectively after performing this action.
+
+INPUT FORMAT :
+
+The first line of the input contains a single integer T denoting the number of test cases. The description of T test cases follows.
+The first and only line of each test case contains five space-separated integers 
+          a,b,c, x and y.
+
+OUTPUT FORMAT :
+
+For each test case, print a single line containing the string “YES” if it is possible to obtain piles of the given sizes or “NO” if it is impossible.
+"""
+class Solution:
+    def solve(a,b,c,x,y):
+        a,b,c,x,y = map(int ,input().strip().split())
+        if (a+b+c) != (x+y):
+            print ("NO")
+        else:
+            if y  < min(a,b,c) or x < min(a,b,c):
+                print("NO")
+            else:
+                print("YES")
+    t = int(input().strip())
+    for _ in range(t):
+        solve(a,b,c,x,y)
+
+
 
