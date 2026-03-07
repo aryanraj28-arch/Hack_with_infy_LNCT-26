@@ -235,4 +235,95 @@ class Solution:
         solve(a,b,c,x,y)
 
 
+"""
+Today you decided to go to the gym. You currently have E energy. There are N exercises in the gym. Each of these exercises drains Ai amount of energy from your body.
+
+You feel tired if your energy reaches 0 or below.
+
+Calculate the minimum number of exercises you have to perform such that you become tired.
+
+Every unique exercise can only be performed at most 2 times, as others also have to use the machines.
+
+If performing all the exercises does not make you feel tired, return -1.
+
+Parameters
+
+E : INTEGER
+
+The first line contains an integer E, denoting the Energy.
+
+1 ≤ E ≤ 10⁵
+
+N : INTEGER
+
+The next line contains an integer N, denoting the number of exercises.
+
+1 ≤ N ≤ 10⁵
+
+A : INTEGER ARRAY
+
+Each of the next N lines (where 0 ≤ i < N) contains an integer describing the amount of energy drained by the i-th exercise.
+
+1 ≤ A[i] ≤ 10⁵
+"""
+class Solution:
+    def min_exe(E,A):
+        A.sort(reverse = True)
+        n = len(A)
+        count = 0
+        for energy in A:
+            for _ in range(2):
+                E-= energy
+                count +=1
+
+                if E<=0:
+                    return count
+        return -1
+    E= int(input().strip())
+    A = list(map(int , input().strip().split()))
+    print(min_exe(E,A))
+
+
+"""
+Minimum ATM Withdrawals
+
+There is a unique ATM in Wonderland. Imagine this ATM as an array of numbers. You can withdraw cash only from either end of the array. Sarah wants to withdraw X amount of cash from the ATM.
+
+What is the minimum number of withdrawals Sarah would need to accumulate X amount of cash? If it is not possible for Sarah to withdraw X amount, return -1.
+"""
+class Solution:
+    def min_withdrawals(A, X , total):
+    total = sum(A)
+    target = total - X
+    
+    if target < 0:
+        return -1
+    if target == 0:
+        return len(A)
+
+    left = 0
+    curr_sum = 0
+    max_len = -1
+
+    for right in range(len(A)):
+        curr_sum += A[right]
+
+        while curr_sum > target and left <= right:
+            curr_sum -= A[left]
+            left += 1
+
+        if curr_sum == target:
+            max_len = max(max_len, right - left + 1)
+
+    if max_len == -1:
+        return -1
+    
+    return len(A) - max_len
+
+    N = int(input().strip())
+    total = int(input().strip())
+    A = list(map(int, input().strip().split())) 
+    X = int(input().strip())
+    print(min_withdrawals(A, X)) 
+
 
